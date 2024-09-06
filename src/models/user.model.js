@@ -5,7 +5,7 @@ import bcrypt from "bcrypt"
 
 
 
-const UserSchema = new Schema(
+const userSchema = new mongoose.Schema(
     {
         username: {
             type: String,
@@ -56,7 +56,7 @@ const UserSchema = new Schema(
     }
 )
 
-UserSchema.pre("save",async function(next){
+userSchema.pre("save",async function(next){
     if(!this.isModified("password")) return next();
     
     this.password= bcrypt.hash(this.password, 10)
@@ -97,4 +97,4 @@ userSchema.methods.generateRefreshToken=function(){
 }
 
 
-export const User = mongoose.model("User", UserSchema)
+export const User = mongoose.model("User", userSchema)
